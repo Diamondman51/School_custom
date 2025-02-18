@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'drf_spectacular_sidecar',
     'teachers',
     'students',
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -136,12 +137,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+AUTH_USER_MODEL = 'authentication.User'
+
+MEDIA_ROOT = 'media'
+
+MEDIA_URL = 'media/'
+
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
@@ -149,7 +156,7 @@ REST_FRAMEWORK = {
 
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your Project API',
+    'TITLE': 'EDUCATION API',
     'DESCRIPTION': 'API documentation for Your Project',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
