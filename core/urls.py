@@ -13,6 +13,6 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-    path('api/', include('authentication.urls')),
-    path('auth/', include('teachers.urls')),
+    # path('api/', include('authentication.urls')),
+    path('api/v1/auth/', include('teachers.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

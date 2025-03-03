@@ -1,10 +1,16 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from teachers.serializers import TeacherSignUpSerializer
-from teachers.views import TeacherSignUpView, TeacherTokenObtainPairView, TeacherTokenRefreshView
+from teachers.views import CourseView, CoursesView, TeacherSignUpView, TeacherTokenObtainPairView, TeacherTokenRefreshView
+
+router = DefaultRouter()
+
+router.register('courses', CoursesView, basename='courses')
+router.register('course', CourseView, basename='course')
 
 urlpatterns = [
-    path('teacher/login/', TeacherTokenObtainPairView.as_view(), name='teacher_token_obtain_pair'),
-    path('teacher/refresh/', TeacherTokenRefreshView.as_view(), name='teacher_token_refresh'),
-    path('teacher/sign_up/', TeacherSignUpView.as_view(), name='teacher_sign_up'),
-]
+    path('login/', TeacherTokenObtainPairView.as_view(), name='teacher_token_obtain_pair'),
+    path('refresh/', TeacherTokenRefreshView.as_view(), name='teacher_token_refresh'),
+    path('sign_up/', TeacherSignUpView.as_view(), name='teacher_sign_up'),
+    
+] + router.urls

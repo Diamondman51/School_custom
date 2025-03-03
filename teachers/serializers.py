@@ -1,13 +1,20 @@
+import re
 from attr import fields
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
 from authentication.models import User
-from teachers.models import Teacher
+from teachers.models import Course, Teacher
 
+LANG_CHOICES = (
+    ("1", "UZ"),
+    ("2", "RU"),
+    ("3", "EN"),
+)
 
 class TeacherTokenObtainPairSerializer(TokenObtainPairSerializer):
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -15,13 +22,25 @@ class TeacherTokenObtainPairSerializer(TokenObtainPairSerializer):
         if hasattr(user, 'teacher_profile'):
             token['role'] = 'teacher'
         else:
-            raise ValueError("Not a teacher.")
+            token['role'] = 'not_teacher'
         return token
-
+    
+    def validate(self, attrs):
+        attrs = super().validate(attrs=attrs)
+        attrs['role'] = 'teacher'
+        return attrs
+    
 
 class TeacherTokenRefreshSerializer(TokenRefreshSerializer):
-    pass
-
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        if hasattr(self, 'teacher_profile'):
+            data['role'] = 'teacher'
+            return data
+        else:
+            data['role'] = 'not_teacher'
+            return data
+        
 
 class TeacherSignUpSerializer(ModelSerializer):
     # username = serializers.CharField()
@@ -55,3 +74,17 @@ class TeacherSignUpSerializer(ModelSerializer):
             return teacher
         except Exception as e:
             raise serializers.ValidationError(str(e))
+    
+    def validate_phone(self, value):
+        regex = re.compile(r'^\+998\d{9}$')
+        f_value = value[4:]
+        if not regex.fullmatch(value):
+            raise serializers.ValidationError(f'Phone number must start with +998, after contains 9 digits not {len(f_value)}')
+        return value
+
+
+class CourseSerializer(ModelSerializer):
+    # langs = serializers.ListField(child=serializers.ChoiceField(choices=LANG_CHOICES))  # ✅ Fix here
+    class Meta:
+        model = Course
+        fields = '__all__'

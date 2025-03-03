@@ -43,12 +43,10 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.set_password(self.password)
             
     def clean(self):
+        super().clean()
         self.hash_password()
 
     def save(self, *args, **kwar):
         self.clean()
         return super().save(*args, **kwar)
 
-    def delete(self, *args, **kwargs):
-        # self.teacher_profile.profile_image.delete()
-        return super().delete(*args, **kwargs)
