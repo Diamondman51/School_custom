@@ -6,7 +6,7 @@ from aiogram.types import Update
 from aiogram.client.bot import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
-import config
+from . import config
 import orjson
 
 # Create your views here.
