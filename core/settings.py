@@ -165,7 +165,8 @@ SPECTACULAR_SETTINGS = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.ngrok-free.app'
+    'https://*.ngrok-free.app',
+    "https://api.telegram.org",
 ]
 
 APPEND_SLASH = False
