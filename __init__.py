@@ -14,11 +14,15 @@
 # print(token.payload)
 
 
-import time
+from asgiref.sync import async_to_sync
 
+class S:
+    async def get(self):
+        print('hello')
+        return {'hook': True}
 
-start = time.time()
-for i in range(1000000):
-    continue
-end = time.time()
-print(end - start)
+    @classmethod
+    async def start(cls):
+        await cls.get(cls)
+
+s = async_to_sync(S.start)()

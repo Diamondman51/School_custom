@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'drf_spectacular_sidecar',
     'teachers',
     'students',
-    'authentication'
+    'authentication',
+    'bot',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'bot.middleware.LifecycleMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -75,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = 'core.asgi.application'
 
 
 # Database

@@ -1,13 +1,13 @@
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.generics import CreateAPIView
-from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from adrf.viewsets import GenericViewSet
+from adrf.generics import CreateAPIView
+from adrf import mixins
 
 from drf_spectacular.utils import extend_schema
 
-from rest_framework.generics import CreateAPIView
+from adrf.generics import CreateAPIView
 from teachers.models import Course, Teacher
 from teachers.serializers import CourseSerializer, TeacherSignUpSerializer, TeacherTokenObtainPairSerializer, TeacherTokenRefreshSerializer
 # Create your views here.

@@ -1,7 +1,6 @@
 import re
-from attr import fields
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
-from rest_framework.serializers import ModelSerializer
+from adrf.serializers import ModelSerializer
 from rest_framework import serializers
 
 from authentication.models import User
