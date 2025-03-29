@@ -44,7 +44,7 @@ class BotView(View):
 
 class SetHook(View):
     async def get(self):
-        await bot.set_webhook(HOOK_URL)
+        await bot.set_webhook(HOOK_URL, drop_pending_updates=True)
         return {'hook': True}
 
     @classmethod
