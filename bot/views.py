@@ -1,6 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 # from django.shortcuts import render
+from django.http import JsonResponse
 import json
 from django.views import View
 from aiogram import Bot, Dispatcher
@@ -38,7 +39,7 @@ class BotView(View):
         update = Update(**data)
         await dp.feed_update(bot=bot, update=update)
         print({'update': 'True'})
-        return {'update': 'True'}
+        return JsonResponse({'update': 'True'})
     
 
 class SetHook(View):
