@@ -169,7 +169,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://api.telegram.org",
 ]
 
-APPEND_SLASH = False
+# APPEND_SLASH = False
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
