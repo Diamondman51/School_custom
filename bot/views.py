@@ -7,6 +7,7 @@ from aiogram.client.bot import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from . import config
+import orjson
 
 # Create your views here.
 
@@ -29,7 +30,7 @@ dp = Dispatcher(
 class BotView(View):
     async def post(self, request):
         
-        data = await json.loads(request.body)
+        data = orjson.loads(request.body)
         update = Update(**data)
         await dp.feed_update(bot=bot, update=update)
         return {'update': 'True'}
