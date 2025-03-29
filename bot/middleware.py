@@ -1,21 +1,21 @@
 import atexit
-
+import asyncio
 from bot.views import DeleteHook, SetHook
-from asgiref.sync import async_to_sync
 
 class LifecycleMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
-        self.startup()
+        asyncio.create_task(self.startup())  # Use async task instead of sync call
 
     def __call__(self, request):
         response = self.get_response(request)
         return response
 
-    def startup(self):
-        async_to_sync(SetHook.start)()
+    async def startup(self):  # Make it async
+        await SetHook.start()  # Use await instead of async_to_sync
 
-    def shutdown(self):
-        async_to_sync(DeleteHook.start)()
+    async def shutdown(self):
+        await DeleteHook.start()  # Use await instead of async_to_sync
 
-atexit.register(LifecycleMiddleware.shutdown)
+# Register the shutdown function properly
+atexit.register(lambda: asyncio.run(LifecycleMiddleware.shutdown(LifecycleMiddleware)))  
