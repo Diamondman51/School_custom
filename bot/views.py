@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 import json
-from rest_framework.views import View
+from django.views import View
 from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 from aiogram.client.bot import DefaultBotProperties
@@ -48,3 +48,7 @@ class DeleteHook(View):
     async def get(self):
         await bot.delete_webhook()
         return {'hook': False}
+    
+    @classmethod
+    async def start(cls):
+        await cls.get(cls)

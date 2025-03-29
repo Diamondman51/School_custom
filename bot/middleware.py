@@ -13,9 +13,9 @@ class LifecycleMiddleware:
         return response
 
     def startup(self):
-        async_to_sync(SetHook.get)()
+        async_to_sync(SetHook.start)()
 
     def shutdown(self):
-        async_to_sync(DeleteHook.get)()
+        async_to_sync(DeleteHook.start)()
 
 atexit.register(LifecycleMiddleware.shutdown)
