@@ -34,7 +34,7 @@ dp = Dispatcher(
 class BotView(View):
     async def post(self, request):
         
-        data = orjson.loads(request.body)
+        data = json.loads(request.body)
         update = Update(**data)
         await dp.feed_update(bot=bot, update=update)
         print({'update': 'True'})
