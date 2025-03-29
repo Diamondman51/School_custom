@@ -37,6 +37,7 @@ class BotView(View):
         data = orjson.loads(request.body)
         update = Update(**data)
         await dp.feed_update(bot=bot, update=update)
+        print({'update': 'True'})
         return {'update': 'True'}
     
 
