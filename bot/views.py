@@ -19,7 +19,7 @@ bot = Bot(
     default=DefaultBotProperties(parse_mode=ParseMode.HTML)
 )
 
-HOOK = '/hook'
+HOOK = '/hook/'
 HOOK_URL = f'https://318c-104-154-169-9.ngrok-free.app/bot{HOOK}'
 
 storage = MemoryStorage()
