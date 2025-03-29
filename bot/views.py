@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import render
 import json
 from django.views import View
@@ -30,6 +31,7 @@ dp = Dispatcher(
 
 
 class BotView(View):
+    @csrf_exempt
     async def post(self, request):
         
         data = orjson.loads(request.body)
