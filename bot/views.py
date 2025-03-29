@@ -6,15 +6,15 @@ from aiogram.types import Update
 from aiogram.client.bot import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
-from . import config
+from config import BOT_TOKEN
 import orjson
 
 # Create your views here.
 
-print(config.BOT_TOKEN)
+print(BOT_TOKEN)
 
 bot = Bot(
-    token=config.BOT_TOKEN,
+    token=BOT_TOKEN,
     # session=session,
     default=DefaultBotProperties(parse_mode=ParseMode.HTML)
 )
