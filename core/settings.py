@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'teachers',
     'students',
     'authentication',
-    'bot',
+    'adrf',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'bot.middleware.LifecycleMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -77,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.asgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
@@ -166,7 +165,7 @@ SPECTACULAR_SETTINGS = {
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.ngrok-free.app',
-    "https://api.telegram.org",
+    # "https://api.telegram.org",
 ]
 
 APPEND_SLASH = True

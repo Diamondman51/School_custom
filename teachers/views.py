@@ -5,6 +5,7 @@ from adrf.viewsets import GenericViewSet
 from adrf.generics import CreateAPIView
 from adrf import mixins
 
+
 from drf_spectacular.utils import extend_schema
 
 from adrf.generics import CreateAPIView
@@ -36,7 +37,7 @@ class TeacherTokenRefreshView(TokenRefreshView):
             }
         }
     )
-    def post(self, request, *args, **kwargs):
+    async def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
 

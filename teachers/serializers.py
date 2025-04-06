@@ -31,7 +31,7 @@ class TeacherTokenObtainPairSerializer(TokenObtainPairSerializer):
     
 
 class TeacherTokenRefreshSerializer(TokenRefreshSerializer):
-    def validate(self, attrs):
+    async def validate(self, attrs):
         data = super().validate(attrs)
         if hasattr(self, 'teacher_profile'):
             data['role'] = 'teacher'
@@ -56,7 +56,7 @@ class TeacherSignUpSerializer(ModelSerializer):
         fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'password', 'profile_image']
     
 
-    def create(self, validated_data):
+    async def create(self, validated_data):
         try:
             user_data = validated_data.pop('user')
             
@@ -74,7 +74,7 @@ class TeacherSignUpSerializer(ModelSerializer):
         except Exception as e:
             raise serializers.ValidationError(str(e))
     
-    def validate_phone(self, value):
+    async def validate_phone(self, value):
         regex = re.compile(r'^\+998\d{9}$')
         f_value = value[4:]
         if not regex.fullmatch(value):
