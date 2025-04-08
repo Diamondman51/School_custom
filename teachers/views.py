@@ -1,16 +1,17 @@
+import time
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from adrf.viewsets import GenericViewSet
-from adrf.generics import CreateAPIView
+from rest_framework.authentication import SessionAuthentication
+from adrf.viewsets import GenericViewSet, ViewSet, ViewSetMixin
 from adrf import mixins
 
 
 from drf_spectacular.utils import extend_schema
 
 from adrf.generics import CreateAPIView
-from teachers.models import Course, Teacher
-from teachers.serializers import CourseSerializer, TeacherSignUpSerializer, TeacherTokenObtainPairSerializer, TeacherTokenRefreshSerializer
+from teachers.models import Course, Group, Teacher
+from teachers.serializers import CourseSerializer, GroupSerializer, GroupsSerializer, TeacherSignUpSerializer, TeacherTokenObtainPairSerializer, TeacherTokenRefreshSerializer
 # Create your views here.
 
 class TeacherTokenObtainPairView(TokenObtainPairView):
@@ -37,7 +38,7 @@ class TeacherTokenRefreshView(TokenRefreshView):
             }
         }
     )
-    async def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
 
@@ -49,17 +50,43 @@ class TeacherSignUpView(CreateAPIView):
 class CoursesView(mixins.CreateModelMixin,
                 mixins.ListModelMixin,
                 GenericViewSet):
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+    def list(self, request, *args, **kwargs):
+        course = Course.objects.first()
+        for i in range(5):
+            print('Timing for ID: ', request.user.id)
+            time.sleep(1)
+        print(f'{type(course.price)=}-------------------sync--------------------')
+        return super().list(request, *args, **kwargs)
+    
 
 
 class CourseView(mixins.DestroyModelMixin, 
                 mixins.RetrieveModelMixin,
                 mixins.UpdateModelMixin,
                 GenericViewSet):
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+
+class GroupsView(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet):
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Group.objects.all()
+    serializer_class = GroupsSerializer
+
+
+class GroupView(mixins.RetrieveModelMixin,
+                mixins.UpdateModelMixin,
+                mixins.DestroyModelMixin,
+                GenericViewSet):
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer

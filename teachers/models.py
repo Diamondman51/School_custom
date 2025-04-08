@@ -90,6 +90,7 @@ class ReadMore(models.Model):
     language = models.CharField(max_length=50, null=True, blank=True)
     about_course = models.TextField(blank=True, null=True)
     course_info = models.TextField(blank=True, null=True)
+    course_id = models.ForeignKey(Course, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Read More"

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'students',
     'authentication',
     'adrf',
+    'whitenoise'
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -137,12 +139,17 @@ AUTHENTICATION_BACKENDS = [
     'authentication.auth_backend.UsernameOrEmailBackend',  # Add this line
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = 'authentication.User'
 
 MEDIA_ROOT = 'media'
 
 MEDIA_URL = 'media/'
+
+STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = 'static/'
+# STATICFILES_DIRS = ['static']
 
 REST_FRAMEWORK = {
 

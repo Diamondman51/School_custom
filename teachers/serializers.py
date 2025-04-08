@@ -4,7 +4,7 @@ from adrf.serializers import ModelSerializer
 from rest_framework import serializers
 
 from authentication.models import User
-from teachers.models import Course, Teacher
+from teachers.models import Course, Group, Teacher
 
 LANG_CHOICES = (
     ("1", "UZ"),
@@ -56,7 +56,7 @@ class TeacherSignUpSerializer(ModelSerializer):
         fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'password', 'profile_image']
     
 
-    async def create(self, validated_data):
+    def create(self, validated_data):
         try:
             user_data = validated_data.pop('user')
             
@@ -74,7 +74,7 @@ class TeacherSignUpSerializer(ModelSerializer):
         except Exception as e:
             raise serializers.ValidationError(str(e))
     
-    async def validate_phone(self, value):
+    def validate_phone(self, value):
         regex = re.compile(r'^\+998\d{9}$')
         f_value = value[4:]
         if not regex.fullmatch(value):
@@ -86,4 +86,18 @@ class CourseSerializer(ModelSerializer):
     # langs = serializers.ListField(child=serializers.ChoiceField(choices=LANG_CHOICES))  # ✅ Fix here
     class Meta:
         model = Course
+        fields = '__all__'
+
+    def post(self, request, *args, **kwargs):
+        print("-------------------------------------------------")
+        return super().post(request, *args, **kwargs)
+
+class GroupsSerializer(ModelSerializer):
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+class GroupSerializer(ModelSerializer):
+    class Meta:
+        model = Group
         fields = '__all__'
