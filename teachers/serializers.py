@@ -23,12 +23,13 @@ class TeacherTokenObtainPairSerializer(TokenObtainPairSerializer):
         else:
             token['role'] = 'not_teacher'
         return token
+
     
     def validate(self, attrs):
         attrs = super().validate(attrs=attrs)
         attrs['role'] = 'teacher'
         return attrs
-    
+
 
 class TeacherTokenRefreshSerializer(TokenRefreshSerializer):
     def validate(self, attrs):

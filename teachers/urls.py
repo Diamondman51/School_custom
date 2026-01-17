@@ -9,8 +9,8 @@ router.register('courses', CoursesView, basename='courses')
 router.register('course', CourseView, basename='course')
 
 urlpatterns = [
-    path('login/', TeacherTokenObtainPairView.as_view(), name='teacher_token_obtain_pair'),
-    path('refresh/', TeacherTokenRefreshView.as_view(), name='teacher_token_refresh'),
-    path('sign_up/', TeacherSignUpView.as_view(), name='teacher_sign_up'),
+    path('auth/login/', TeacherTokenObtainPairView.as_view(), name='teacher_token_obtain_pair'),
+    path('auth/refresh/', TeacherTokenRefreshView.as_view(), name='teacher_token_refresh'),
+    path('auth/sign_up/', TeacherSignUpView.as_view(), name='teacher_sign_up'),
     
 ] + router.urls

@@ -29,8 +29,11 @@ class TeacherAdmin(admin.ModelAdmin):
     # def get_list_display(self, request):
     #     return super().get_list_display(request)
 
+class CoureAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'description']
+
 
 admin.site.register(Teacher, TeacherAdmin)
-admin.site.register(Course)
+admin.site.register(Course, CoureAdmin)
 admin.site.register(ReadMore)
 admin.site.register(Group)

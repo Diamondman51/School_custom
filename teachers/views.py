@@ -1,16 +1,18 @@
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from adrf.viewsets import GenericViewSet
-from adrf.generics import CreateAPIView
-from adrf import mixins
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.generics import CreateAPIView
+from rest_framework import mixins
 
 from drf_spectacular.utils import extend_schema
 
-from adrf.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView
 from teachers.models import Course, Teacher
 from teachers.serializers import CourseSerializer, TeacherSignUpSerializer, TeacherTokenObtainPairSerializer, TeacherTokenRefreshSerializer
 # Create your views here.
+
 
 class TeacherTokenObtainPairView(TokenObtainPairView):
     serializer_class = TeacherTokenObtainPairSerializer
@@ -48,7 +50,7 @@ class TeacherSignUpView(CreateAPIView):
 class CoursesView(mixins.CreateModelMixin,
                 mixins.ListModelMixin,
                 GenericViewSet):
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -58,7 +60,7 @@ class CourseView(mixins.DestroyModelMixin,
                 mixins.RetrieveModelMixin,
                 mixins.UpdateModelMixin,
                 GenericViewSet):
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
